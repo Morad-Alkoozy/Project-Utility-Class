@@ -1,0 +1,71 @@
+#pragma once
+#include "clsDate.h"
+
+class clsPeriod
+{
+    clsDate StartDate;
+    clsDate EndDate;
+public:
+
+
+
+    clsPeriod(clsDate StartDate, clsDate DateTo)
+    {
+        this->StartDate = StartDate;
+        this->EndDate = EndDate;
+
+    }
+
+    void SetStartDate(clsDate StartDate)
+    {
+        this->StartDate = StartDate;
+    }
+
+    clsDate GetStartDate()
+    {
+        return this->StartDate;
+    }
+
+    void SetEndDate(clsDate EndDate)
+    {
+        this->EndDate = EndDate;
+    }
+
+    clsDate GetStartDate()
+    {
+        return this->EndDate;
+    }
+
+    static bool IsOverlapPeriods(clsPeriod Period1, clsPeriod Period2)
+    {
+
+        if (
+            clsDate::CompareDates(Period2.EndDate, Period1.StartDate) == clsDate::enDateCompare::Before
+            ||
+            clsDate::CompareDates(Period2.StartDate, Period1.EndDate) == clsDate::enDateCompare::After
+            )
+            return false;
+        else
+            return true;
+
+    }
+
+    bool IsOverLapWith(clsPeriod Period2)
+    {
+        return IsOverlapPeriods(*this, Period2);
+    }
+
+    void Print()
+    {
+        cout << "Period Start: ";
+        StartDate.Print();
+
+
+        cout << "Period End: ";
+        EndDate.Print();
+
+
+    }
+
+};
+
