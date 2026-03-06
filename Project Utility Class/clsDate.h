@@ -5,7 +5,7 @@
 #include<iostream>
 #include<string>
 #include "clsString.h"
-
+#include<ctime>
 using namespace std;
 
 class clsDate
@@ -28,6 +28,18 @@ public:
 		_Year = now->tm_year + 1900;
 	}
 
+	clsDate(string sDate)
+	{
+
+		vector <string> vDate;
+		vDate = clsString::Split(sDate, "/");
+
+		_Day = stoi(vDate[0]);
+		_Month = stoi(vDate[1]);
+		_Year = stoi(vDate[2]);
+
+	}
+
 	clsDate(short Day, short Month, short Year)
 	{
 
@@ -35,6 +47,15 @@ public:
 		_Month = Month;
 		_Year = Year;
 
+	}
+
+	clsDate(short DateOrderInYear, short Year)
+	{
+		//This will construct a date by date order in year
+		clsDate Date1 = GetDateFromDayOrderInYear(DateOrderInYear, Year);
+		_Day = Date1.Day;
+		_Month = Date1.Month;
+		_Year = Date1.Year;
 	}
 
 	void SetDay(short Day) {
@@ -85,6 +106,27 @@ public:
 		return clsDate(Day, Month, Year);
 	}
 
+	static string GetSystemDateTimeString()
+	{
+		//system datetime string
+		time_t t = time(0);
+		tm* now = localtime(&t);
+
+		short Day, Month, Year, Hour, Minute, Second;
+
+		Year = now->tm_year + 1900;
+		Month = now->tm_mon + 1;
+		Day = now->tm_mday;
+		Hour = now->tm_hour;
+		Minute = now->tm_min;
+		Second = now->tm_sec;
+
+		return (to_string(Day) + "/" + to_string(Month) + "/"
+			+ to_string(Year) + " - "
+			+ to_string(Hour) + ":" + to_string(Minute)
+			+ ":" + to_string(Second));
+
+	}
 	static	bool IsValidDate(clsDate Date)
 	{
 
@@ -1109,4 +1151,3 @@ public:
 
 
 };
-
